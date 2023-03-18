@@ -10,12 +10,10 @@ app.use(cors({ origin: "*" }));
 
 require("dotenv").config({ path: ".env" });
 
-// const user = require("./routes/user");
-// const restaurant = require("./routes/restaurant");
-// const product = require("./routes/product");
+const patient = require("./routes/patient");
+const doctor = require("./routes/doctor");
 
-// app.use("/api", user);
-// app.use("/api", restaurant);
-// app.use("/api", product);
+app.use("/api", patient);
+app.use("/api", doctor);
 
 module.exports = app;
