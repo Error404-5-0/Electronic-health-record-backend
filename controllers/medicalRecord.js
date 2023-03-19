@@ -18,7 +18,7 @@ exports.addMedicalRecord = async (req, res) => {
     await req.patient.save();
 
     return res.status(200).json({
-      status: true,
+      success: true,
       data: medicalRecord,
     });
   } catch (error) {

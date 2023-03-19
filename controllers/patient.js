@@ -7,7 +7,6 @@ exports.signup = async (req, res) => {
     const { name, email, password } = req.body;
 
     let patient = await Patient.findOne({ email });
-    console.log(patient);
 
     if (patient) {
       return res.status(400).json({
@@ -65,7 +64,7 @@ exports.login = async (req, res) => {
 
     return res.status(200).cookie("patientToken", token, options).json({
       success: true,
-      message: "Logged in successfully",
+      data: "Logged in successfully",
     });
   } catch (error) {
     return res.status(500).json({
@@ -136,10 +135,12 @@ exports.getPatientDetails = async (req, res) => {
 
     let patient = await req.patient.populate("medicalRecords");
 
-    patient.profileImage = await getUrl(patient.profileImage);
+    if (patient.profileImage !== "") {
+      patient.profileImage = await getUrl(patient.profileImage);
+    }
 
     return res.status(200).json({
-      status: true,
+      success: true,
       data: patient,
     });
   } catch (error) {

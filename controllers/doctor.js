@@ -135,11 +135,36 @@ exports.getDoctorDetails = async (req, res) => {
 
     const doctor = await req.doctor.populate("patients");
 
-    doctor.profileImage = await getUrl(doctor.profileImage);
+    if (doctor.profileImage !== "") {
+      doctor.profileImage = await getUrl(doctor.profileImage);
+    }
 
     return res.status(200).json({
       success: true,
       data: doctor,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+exports.getDoctors = async (req, res) => {
+  try {
+    const doctors = await Doctor.find();
+
+    if (!doctors) {
+      return res.status(404).json({
+        success: false,
+        message: "No Doctors available",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: doctors,
     });
   } catch (error) {
     return res.status(500).json({

@@ -11,6 +11,8 @@ const {
   revokeDoctorAccess,
 } = require("../controllers/patient");
 
+const { getDoctors } = require("../controllers/doctor");
+
 const {
   addMedicalRecord,
   previewMedicalRecord,
@@ -21,7 +23,9 @@ const router = express.Router();
 router.route("/patient/signup").post(signup);
 router.route("/patient/login").post(login);
 router.route("/patient/logout").post(isAuthenticated, logout);
-router.route("/patient/editDetails").post(isAuthenticated,upload.single("file"), editDetails);
+router
+  .route("/patient/editDetails")
+  .post(isAuthenticated, upload.single("file"), editDetails);
 router.route("/patient/getDetails").get(isAuthenticated, getPatientDetails);
 router
   .route("/patient/addMedicalRecord")
@@ -29,6 +33,8 @@ router
 router
   .route("/patient/previewMedicalRecord")
   .get(isAuthenticated, previewMedicalRecord);
+
+router.route("/patient/doctors").get(isAuthenticated, getDoctors);
 router.route("/patient/authorizeDoctor").post(isAuthenticated, authorizeDoctor);
 router
   .route("/patient/revokeDoctorAccess")
