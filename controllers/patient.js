@@ -58,9 +58,11 @@ exports.login = async (req, res) => {
     const token = patient.generateToken();
 
     const options = {
-      // httpOnly: true,
-      // secure: true,
+       httpOnly: true,
+       secure: true,
+       sameSite: 'none',
     };
+
 
     return res.status(200).cookie("patientToken", token, options).json({
       success: true,
