@@ -58,8 +58,9 @@ exports.login = async (req, res) => {
     const token = doctor.generateToken();
 
     const options = {
-      //   httpOnly: true,
-      //   secure: true,
+       httpOnly: true,
+       secure: true,
+       sameSite: 'none',
     };
 
     return res.status(200).cookie("doctorToken", token, options).json({
